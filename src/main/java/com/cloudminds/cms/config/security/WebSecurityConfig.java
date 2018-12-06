@@ -1,8 +1,10 @@
 package com.cloudminds.cms.config.security;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -33,6 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			new AntPathRequestMatcher("/configuration/ui"),
 			new AntPathRequestMatcher("/configuration/security"),
 			new AntPathRequestMatcher("/v2/api-docs"),
+			new AntPathRequestMatcher("/cmsUser/v1/login"),
 			new AntPathRequestMatcher("/user/add_user")
 			);
 
@@ -69,7 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication()
-				.withUser("zhouchong").password("zhouchong510").roles("ADMIN");
+				.withUser("zhouchong").password("zhouchong510").roles("USER");
 	}
 
 	/**
@@ -84,5 +87,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	AuthenticationEntryPoint forbiddenEntryPoint() {
 		return new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED);
+	}
+
+	@Override
+	@Bean(name = "userAuthenticationManager")
+	public AuthenticationManager authenticationManagerBean()throws Exception{
+		return super.authenticationManagerBean();
 	}
 }

@@ -14,9 +14,10 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
   data:
     mongodb:
-      host: 10.11.34.173
+#      host: 10.11.34.173\
       port: 27017
       database: cms
+      host: 192.168.232.129
 
 # spring server config
 server:
@@ -26,7 +27,14 @@ server:
 
 #logging config
 logging:
-  file: /var/logs/cms/cms.log
+  file: ./logs/cms.log
   level:
     root: info
+
+#用户登录Redis过期时间
+com:
+  cloudminds:
+    user:
+      token:
+        ttl: 1800
 

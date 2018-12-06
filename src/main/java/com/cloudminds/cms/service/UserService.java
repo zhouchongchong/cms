@@ -33,11 +33,12 @@ public class UserService {
 	 */
 	public User save (User user){
 		user.setAdmin(true);
+		user.setUserName("zhouchong");
 		user.setGroupId(1);
 		user.setLoginCount(0L);
 		user.setStatus(1);
 		user.setRegisterTime(new Date());
-		user.setPassWord("1231231");
+		user.setPassWord("123456");
 
 		boolean save = userDao.save(user);
 		_log.info("{}, User: {}, is save:{}",sys,user,save);
