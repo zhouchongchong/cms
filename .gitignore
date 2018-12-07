@@ -15,7 +15,7 @@
 *.iws
 *.iml
 *.ipr
-*.log
+*.log*
 
 ### NetBeans ###
 /nbproject/private/
@@ -26,3 +26,4 @@
 /.nb-gradle/
 src/main/resources/static/
 src/main/resources/templates/
+logs/cms.log.2018-12-06.0.gz

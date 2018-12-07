@@ -35,8 +35,10 @@ public class User implements UserDetails {
 
 	private boolean isAdmin = false;
 
+	private String token;
+
 	@JsonIgnore
-	private String passWord;
+	private String password;
 	//roles
 	private Collection<? extends GrantedAuthority> authorities;
 	//菜单
@@ -59,7 +61,7 @@ public class User implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return this.passWord;
+		return this.password;
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package com.cloudminds.cms.config.security;
 
+import com.cloudminds.cms.service.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,6 +43,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
 
+
+	@Autowired
+	private CustomUserDetailsService userDetailsService;
+
 	/**
 	 * 对http 请求进行拦截
 	 * 配置拦截信息 并针对性过滤
@@ -71,8 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
-				.withUser("zhouchong").password("zhouchong510").roles("USER");
+		auth.userDetailsService(userDetailsService).passwordEncoder(new CustomPasswordEncoder());
 	}
 
 	/**

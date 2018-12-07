@@ -66,6 +66,10 @@ public class RedisUtil {
         return valueOps.get(NAMESPACE + key);
     }
 
+    public String getStrValue(String key) {
+        return (String) valueOps.get(NAMESPACE + key);
+    }
+
     public Long setSet(String key, String... value) {
         return setOps.add(NAMESPACE + key, value);
     }

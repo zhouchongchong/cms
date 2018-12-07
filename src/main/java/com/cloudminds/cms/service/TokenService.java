@@ -1,11 +1,15 @@
 package com.cloudminds.cms.service;
 
+import com.cloudminds.cms.entity.mongo.User;
 import com.cloudminds.cms.utils.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+
+import java.util.UUID;
 
 /**
  * @Author: zhouchong
@@ -21,4 +25,23 @@ public class TokenService {
 	@Autowired
 	private RedisUtil redisUtil;
 
+
+	public String getToken(String userName) {
+		Assert.notNull(userName, "Redis get kv key can't be null");
+		return redisUtil.getStrValue(userName);
+	}
+
+	/**
+	 * 生成token
+	 *
+	 * @return
+	 */
+	public String generateNewToken() {
+		return UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+	}
+
+	public void store(User user){
+		redisUtil.setValue(user.getToken(),user,tokenTTL);
+		redisUtil.setValue(user.getUsername(),user.getToken(),tokenTTL);
+	}
 }

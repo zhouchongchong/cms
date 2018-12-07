@@ -1,7 +1,9 @@
 package com.cloudminds.cms.service;
 
+import com.cloudminds.cms.constant.ConstantBean;
 import com.cloudminds.cms.dao.mongo.UserDao;
 import com.cloudminds.cms.entity.mongo.User;
+import com.cloudminds.cms.utils.PasswordUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +40,17 @@ public class UserService {
 		user.setLoginCount(0L);
 		user.setStatus(1);
 		user.setRegisterTime(new Date());
-		user.setPassWord("123456");
+		user.setPassword(PasswordUtil.digest("123456"));
 
 		boolean save = userDao.save(user);
 		_log.info("{}, User: {}, is save:{}",sys,user,save);
 
 		return user;
+	}
+
+	public User findByName(String userName){
+		User user = new User();
+		user.setUserName(userName);
+		return userDao.findByCondition(user,User.class).get(0);
 	}
 }
