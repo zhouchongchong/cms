@@ -1,9 +1,14 @@
+#server host
+config:
+  server:
+    ip: 192.168.232.135
+
 #spring config
 spring:
   application:
     name: MMCMS
   datasource:
-    url: jdbc:mysql://192.168.232.129:3306/mmcms?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql:// ${config.server.ip}:3306/mmcms?useUnicode=true&characterEncoding=utf-8
     username: zhouchong
     password: zhouchong@510
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -16,7 +21,23 @@ spring:
     mongodb:
       port: 27017
       database: cms
-      host: 192.168.232.129
+      host: ${config.server.ip}
+  redis:
+    host: ${config.server.ip}
+    port: 6379
+    database: 0
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-wait: -1ms
+        max-active: 8
+
+  cache:
+    redis:
+      key-prefix: ${spring.application.name:application}
+      cache-null-values: false
+
 
 # spring server config
 server:

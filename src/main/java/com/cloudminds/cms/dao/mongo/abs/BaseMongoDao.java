@@ -14,6 +14,8 @@ import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
@@ -123,6 +125,21 @@ public abstract class BaseMongoDao<T> {
 	 */
 	public List<T> findByCondition(T model,Class tClass){
 		Query query = beFromeModel(model);
+		return mongoTemplate.find(query,tClass);
+	}
+
+	/**
+	 * 根据参数查询
+	 *
+	 * @param tClass
+	 * @param queryMap
+	 * @return
+	 */
+	public List<T> findByCondition(Map<String,Object> queryMap,Class tClass){
+		Query query = new Query();
+		for (Map.Entry<String,Object> entry:queryMap.entrySet()){
+			query.addCriteria(Criteria.where(entry.getKey()).is(entry.getValue()));
+		}
 		return mongoTemplate.find(query,tClass);
 	}
 

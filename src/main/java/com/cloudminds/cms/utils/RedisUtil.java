@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class RedisUtil {
     private final static Logger logger = LoggerFactory.getLogger(RedisUtil.class);
 
-    private final static String NAMESPACE = "hi-seat:";
+    private final static String NAMESPACE = "cms:";
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;

@@ -72,7 +72,7 @@ public class LoginController extends BaseController {
 				authUser.setToken(token);
 
 				tokenService.store(authUser);
-				baseResp.setData(authUser);
+				baseResp.setData(token);
 			} else {
 				throw new LoginException(LoginException.WRONG_PWD,"USERNAME OR PASSWORD IS WRONG");
 			}

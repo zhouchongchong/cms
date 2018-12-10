@@ -1,6 +1,7 @@
 package com.cloudminds.cms.config.security;
 
 import com.cloudminds.cms.service.CustomUserDetailsService;
+import com.cloudminds.cms.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -12,8 +13,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
@@ -47,6 +51,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
 
+	@Autowired
+	private TokenService tokenService;
+
 	/**
 	 * 对http 请求进行拦截
 	 * 配置拦截信息 并针对性过滤
@@ -56,17 +63,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-				.antMatchers("/", "/index").permitAll()
-				.anyRequest().authenticated()
+		http
+				.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.exceptionHandling()
 				.defaultAuthenticationEntryPointFor(forbiddenEntryPoint(), PROTECTED_URLS)
 				.and()
-//				.formLogin()
-//				.loginPage("/login").permitAll()
-//				.and()
-				.logout().permitAll();
+//                .authenticationProvider(provider)
+				.addFilterBefore(restAuthenticationFilter(), AnonymousAuthenticationFilter.class)
+				.authorizeRequests()
+				.anyRequest()
+				.authenticated()
+				.and()
+				.cors()
+				.and()
+				.csrf().disable()
+				.formLogin().disable()
+				.httpBasic().disable()
+				.logout().disable();
 	}
 
 	/**
@@ -98,5 +113,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean(name = "userAuthenticationManager")
 	public AuthenticationManager authenticationManagerBean()throws Exception{
 		return super.authenticationManagerBean();
+	}
+
+	@Bean
+	TokenAuthenticationFilter restAuthenticationFilter() throws Exception {
+		final TokenAuthenticationFilter filter = new TokenAuthenticationFilter(PROTECTED_URLS);
+		filter.setAuthenticationManager(authenticationManager());
+		filter.setAuthenticationSuccessHandler(successHandler());
+		filter.setTokenService(tokenService);
+		return filter;
+	}
+
+	@Bean
+	SimpleUrlAuthenticationSuccessHandler successHandler() {
+		final SimpleUrlAuthenticationSuccessHandler successHandler = new SimpleUrlAuthenticationSuccessHandler();
+		successHandler.setRedirectStrategy(new NoRedirectStrategy());
+		return successHandler;
 	}
 }

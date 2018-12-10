@@ -12,4 +12,7 @@ public class ConstantBean {
 
 
 	public static final String PASSWORD_SALT = "!@#$%^&*(_+)";
+
+	public static final String AUTH_HEADER = "X-Auth-Info";
+
 }

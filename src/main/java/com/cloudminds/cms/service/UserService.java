@@ -7,10 +7,15 @@ import com.cloudminds.cms.utils.PasswordUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: zhouchong
@@ -49,8 +54,15 @@ public class UserService {
 	}
 
 	public User findByName(String userName){
-		User user = new User();
-		user.setUserName(userName);
-		return userDao.findByCondition(user,User.class).get(0);
+		Map<String, Object> queryMap = new HashMap<>();
+		queryMap.put("userName",userName);
+		User user = null;
+		try {
+			user = userDao.findByCondition(queryMap, User.class).get(0);
+		}catch (IndexOutOfBoundsException e){
+			throw new UsernameNotFoundException("USER CON'T FIND");
+		} finally {
+			return user;
+		}
 	}
 }

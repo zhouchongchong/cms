@@ -40,8 +40,24 @@ public class TokenService {
 		return UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
 	}
 
-	public void store(User user){
-		redisUtil.setValue(user.getToken(),user,tokenTTL);
-		redisUtil.setValue(user.getUsername(),user.getToken(),tokenTTL);
+	public void store(User user) {
+		redisUtil.setValue(user.getToken(), user, tokenTTL);
+		redisUtil.setValue(user.getUsername(), user.getToken(), tokenTTL);
+	}
+
+	public User reStore(String token) {
+		User user = null;
+		try {
+			Assert.notNull(token, "TOKEN CANT BE NULL");
+			user = (User) redisUtil.getValue(token);
+			Assert.notNull(user, "REDIS CACHE EXPIRED");
+			redisUtil.expire(token, tokenTTL);
+			redisUtil.expire(user.getUsername(), tokenTTL);
+		} catch (Exception e) {
+			_log.error(e.getMessage(), e);
+		} finally {
+			return user;
+		}
+
 	}
 }
