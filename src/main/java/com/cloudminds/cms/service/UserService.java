@@ -1,8 +1,8 @@
 package com.cloudminds.cms.service;
 
-import com.cloudminds.cms.constant.ConstantBean;
-import com.cloudminds.cms.dao.mongo.UserDao;
-import com.cloudminds.cms.entity.mongo.User;
+import com.cloudminds.cms.dao.mysql.UserMapper;
+import com.cloudminds.cms.entity.mysql.User;
+import com.cloudminds.cms.entity.mysql.UserExample;
 import com.cloudminds.cms.utils.PasswordUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -26,7 +25,7 @@ import java.util.Map;
 @Transactional(rollbackFor = Exception.class)
 public class UserService {
 	@Autowired
-	private UserDao userDao;
+	private UserMapper userMapper;
 
 	private static String sys = "******* US";
 
@@ -39,15 +38,14 @@ public class UserService {
 	 * @return
 	 */
 	public User save (User user){
-		user.setAdmin(true);
-		user.setUserName("zhouchong");
-		user.setGroupId(1);
-		user.setLoginCount(0L);
-		user.setStatus(1);
-		user.setRegisterTime(new Date());
+		user.setUsername("zhouchong");
+		user.setLogincount(0L);
+
+		user.setStatus(Byte.parseByte("1"));
+		user.setRegistertime(new Date());
 		user.setPassword(PasswordUtil.digest("123456"));
 
-		boolean save = userDao.save(user);
+		int save = userMapper.insert(user);
 		_log.info("{}, User: {}, is save:{}",sys,user,save);
 
 		return user;
@@ -58,7 +56,14 @@ public class UserService {
 		queryMap.put("userName",userName);
 		User user = null;
 		try {
-			user = userDao.findByCondition(queryMap, User.class).get(0);
+			UserExample userExample = new UserExample();
+			UserExample.Criteria criteria = userExample.createCriteria();
+			criteria.andUsernameEqualTo(userName);
+			List<User> users = userMapper.selectByExample(userExample);
+			if (users.isEmpty()){
+				throw new UsernameNotFoundException("USER CON'T FIND");
+			}
+			user = users.get(0);
 		}catch (IndexOutOfBoundsException e){
 			throw new UsernameNotFoundException("USER CON'T FIND");
 		} finally {

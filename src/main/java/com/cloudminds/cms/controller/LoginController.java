@@ -2,7 +2,7 @@ package com.cloudminds.cms.controller;
 
 import com.cloudminds.cms.config.exception.LoginException;
 import com.cloudminds.cms.constant.ConstantBean;
-import com.cloudminds.cms.entity.mongo.User;
+import com.cloudminds.cms.entity.mysql.User;
 import com.cloudminds.cms.service.TokenService;
 import com.cloudminds.cms.vo.BaseResp;
 import com.cloudminds.cms.vo.LoginUser;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;

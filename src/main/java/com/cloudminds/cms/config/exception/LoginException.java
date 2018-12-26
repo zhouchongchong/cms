@@ -24,7 +24,7 @@ public class LoginException extends InternalAuthenticationServiceException {
 		super(message);
 	}
 
-	public LoginException(String message, String code) {
+	public LoginException(String code, String message) {
 		super(message);
 		this.code = code;
 	}

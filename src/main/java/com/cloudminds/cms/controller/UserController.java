@@ -1,6 +1,6 @@
 package com.cloudminds.cms.controller;
 
-import com.cloudminds.cms.entity.mongo.User;
+import com.cloudminds.cms.entity.mysql.User;
 import com.cloudminds.cms.service.UserService;
 import com.cloudminds.cms.vo.BaseResp;
 import io.swagger.annotations.ApiOperation;

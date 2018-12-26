@@ -1,7 +1,7 @@
 package com.cloudminds.cms.service;
 
 import com.cloudminds.cms.config.exception.LoginException;
-import com.cloudminds.cms.entity.mongo.User;
+import com.cloudminds.cms.entity.mysql.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.security.core.userdetails.UserDetailsService;

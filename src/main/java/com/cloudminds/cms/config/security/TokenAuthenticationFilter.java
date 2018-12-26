@@ -1,7 +1,7 @@
 package com.cloudminds.cms.config.security;
 
 import com.cloudminds.cms.constant.ConstantBean;
-import com.cloudminds.cms.entity.mongo.User;
+import com.cloudminds.cms.entity.mysql.User;
 import com.cloudminds.cms.service.TokenService;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -71,7 +71,7 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 			final HttpServletResponse response,
 			final FilterChain chain,
 			final Authentication authResult) throws IOException, ServletException {
-		super.successfulAuthentication(request, response, chain, authResult);
-		chain.doFilter(request, response);
+//		super.successfulAuthentication(request, response, chain, authResult);
+	 	chain.doFilter(request, response);
 	}
 }

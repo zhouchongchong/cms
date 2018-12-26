@@ -1,6 +1,6 @@
 package com.cloudminds.cms.service;
 
-import com.cloudminds.cms.entity.mongo.User;
+import com.cloudminds.cms.entity.mysql.User;
 import com.cloudminds.cms.utils.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
