@@ -59,7 +59,8 @@ public class UserService {
 			UserExample userExample = new UserExample();
 			UserExample.Criteria criteria = userExample.createCriteria();
 			criteria.andUsernameEqualTo(userName);
-			List<User> users = userMapper.selectByExample(userExample);
+//			List<User> users = userMapper.selectByExample(userExample);
+			List<User> users = userMapper.selectAllByExample(userExample);
 			if (users.isEmpty()){
 				throw new UsernameNotFoundException("USER CON'T FIND");
 			}

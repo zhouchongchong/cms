@@ -54,6 +54,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private TokenService tokenService;
+	@Autowired
+	private URLFilterInvocationSecurityMetadataSource urlFilterInvocationSecurityMetadataSource;
+	@Autowired
+	private PermissionAccessDecisionManager permissionAccessDecisionManager;
+
 
 	/**
 	 * 对http 请求进行拦截
@@ -74,12 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .authenticationProvider(provider)
 				.addFilterBefore(restAuthenticationFilter(), AnonymousAuthenticationFilter.class)
 				.authorizeRequests()
-//				.withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-//					@Override
-//					public <O extends FilterSecurityInterceptor> O postProcess(O object) {
-//						return null;
-//					}
-//				})
+				.withObjectPostProcessor(new URLPostProcessor(urlFilterInvocationSecurityMetadataSource,permissionAccessDecisionManager))
 				.anyRequest()
 				.authenticated()
 				.and()
