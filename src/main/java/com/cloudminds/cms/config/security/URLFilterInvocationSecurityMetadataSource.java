@@ -44,7 +44,7 @@ public class URLFilterInvocationSecurityMetadataSource implements FilterInvocati
 	}
 	/**
 	 * 此方法是为了判定用户请求的url 是否在权限表中，如果在权限表中，则返回给 decide 方法， 用来判定用户
-	 * 是否有此权限。如果不在权限表中则放行。
+	 * 是否有此权限。如果不在权限表中则放行
 	 */
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {

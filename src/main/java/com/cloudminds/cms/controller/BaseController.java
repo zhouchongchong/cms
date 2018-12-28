@@ -42,7 +42,7 @@ public class BaseController
 		BaseResp resp = new BaseResp();
 		
 		resp.setStatus(ConstantBean.RESPONSE_ERR);
-		resp.setMessage(e.getMessage());
+		resp.setMessage(e.getLocalizedMessage());
 		
 		return resp;
 	}
