@@ -8,7 +8,7 @@ spring:
   application:
     name: MMCMS
   datasource:
-    url: jdbc:mysql:// ${config.server.ip}:3306/mmcms?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://${config.server.ip}:3306/mmcms?useUnicode=true&characterEncoding=utf-8
     username: zhouchong
     password: zhouchong@510
     driver-class-name: com.mysql.cj.jdbc.Driver

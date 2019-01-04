@@ -169,10 +169,10 @@
         </if>
         )
         AS ur
-        INNER JOIN user_role ON ur.id = user_role.user_id
-        INNER JOIN role ON role.id = user_role.role_id
-        INNER JOIN role_permission ON role_permission.role_id = role.id
-        INNER JOIN permission ON role_permission.permission_id = permission.permission_id
+        LEFT JOIN user_role ON ur.id = user_role.user_id
+        LEFT JOIN role ON role.id = user_role.role_id
+        LEFT JOIN role_permission ON role_permission.role_id = role.id
+        LEFT JOIN permission ON role_permission.permission_id = permission.permission_id
 
     </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

@@ -60,4 +60,18 @@ public class TokenService {
 		}
 
 	}
+
+	public boolean delToken(String token){
+		User user = null;
+		try {
+			Assert.notNull(token, "TOKEN CANT BE NULL");
+			user = (User) redisUtil.getValue(token);
+			Assert.notNull(user, "REDIS CACHE EXPIRED");
+			redisUtil.deleteKey(token);
+			redisUtil.deleteKey(user.getUsername());
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
 }

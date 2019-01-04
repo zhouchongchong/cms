@@ -37,12 +37,12 @@ public class BaseController
 	@ResponseBody
 	public BaseResp handleException(Exception e)
 	{
-		logger.error("====================请求出错：", e);
+		logger.error("====================request err", e);
 		
 		BaseResp resp = new BaseResp();
 		
 		resp.setStatus(ConstantBean.RESPONSE_ERR);
-		resp.setMessage(e.getLocalizedMessage());
+		resp.setMessage("err");
 		
 		return resp;
 	}

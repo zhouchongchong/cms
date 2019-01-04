@@ -91,4 +91,13 @@ public class LoginController extends BaseController {
 
 	}
 
+
+	public BaseResp logout(String token){
+		BaseResp baseResp = new BaseResp();
+
+
+
+		return baseResp;
+	}
+
 }
