@@ -49,7 +49,7 @@ public class LoginController extends BaseController {
 		_log.info("********** login user:{}", loginUser);
 		BaseResp baseResp = new BaseResp();
 		baseResp.setSys(sys);
-
+		baseResp.setStatus(ConstantBean.RESPONSE_200);
 		String userName = loginUser.getUserName();
 		String password = loginUser.getPassword();
 

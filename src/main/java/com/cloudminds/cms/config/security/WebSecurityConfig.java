@@ -5,6 +5,7 @@ import com.cloudminds.cms.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
@@ -79,6 +80,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .authenticationProvider(provider)
 				.addFilterBefore(restAuthenticationFilter(), AnonymousAuthenticationFilter.class)
 				.authorizeRequests()
+//				.antMatchers(HttpMethod.OPTIONS)
+//				.permitAll()
 				.withObjectPostProcessor(new URLPostProcessor(urlFilterInvocationSecurityMetadataSource,permissionAccessDecisionManager))
 				.anyRequest()
 				.authenticated()

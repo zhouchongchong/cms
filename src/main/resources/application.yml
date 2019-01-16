@@ -1,7 +1,7 @@
 #server host
 config:
   server:
-    ip: 192.168.232.135
+    ip: 192.168.232.137
 
 #spring config
 spring:

@@ -46,7 +46,7 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
 		final String token = Optional
 				.ofNullable(request.getHeader(ConstantBean.AUTH_HEADER))
-				.orElse(request.getParameter("t"));
+				.orElse(request.getParameter("Authorization"));
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		if (StringUtils.isEmpty(authentication)){
