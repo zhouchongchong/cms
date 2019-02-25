@@ -1,7 +1,7 @@
 #server host
 config:
   server:
-    ip: 192.168.232.135
+    ip: 127.0.0.1
 
 #spring config
 spring:
@@ -23,7 +23,8 @@ spring:
       database: cms
       host: ${config.server.ip}
   redis:
-    host: ${config.server.ip}
+#    host: ${config.server.ip}
+    host: 10.11.34.173
     port: 6379
     database: 0
     lettuce:
