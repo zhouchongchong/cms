@@ -13,6 +13,7 @@ public class LoginException extends InternalAuthenticationServiceException {
 	public static final String WRONG_PWD = "-1";
 	public static final String ALREADY_LOGIN = "-2";
 	public static final String NOT_EXIST = "-3";
+	public static final String TOKEN_EXISTS = "-4";
 
 	private String code;
 

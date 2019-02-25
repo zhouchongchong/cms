@@ -2,10 +2,12 @@ package com.cloudminds.cms.service;
 
 import com.cloudminds.cms.entity.mysql.User;
 import com.cloudminds.cms.utils.RedisUtil;
+import javafx.fxml.LoadException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -54,7 +56,7 @@ public class TokenService {
 			redisUtil.expire(token, tokenTTL);
 			redisUtil.expire(user.getUsername(), tokenTTL);
 		} catch (Exception e) {
-			_log.error(e.getMessage(), e);
+			_log.error("CANT GET USER");
 		} finally {
 			return user;
 		}
