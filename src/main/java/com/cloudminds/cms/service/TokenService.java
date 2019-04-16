@@ -2,16 +2,17 @@ package com.cloudminds.cms.service;
 
 import com.cloudminds.cms.entity.mysql.User;
 import com.cloudminds.cms.utils.RedisUtil;
-import javafx.fxml.LoadException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.util.UUID;
+
+//import org.springframework.cloud.context.config.annotation.RefreshScope;
+//import org.springframework.security.authentication.BadCredentialsException;
 
 /**
  * @Author: zhouchong
@@ -19,10 +20,15 @@ import java.util.UUID;
  * @Description:
  */
 @Component
+//@RefreshScope
 public class TokenService {
 	public static final Logger _log = LoggerFactory.getLogger(TokenService.class);
 	@Value("${com.cloudminds.user.token.ttl}")
 	private Long tokenTTL;
+
+	public Long getTokenTTL() {
+		return tokenTTL;
+	}
 
 	@Autowired
 	private RedisUtil redisUtil;

@@ -1,10 +1,12 @@
 package com.cloudminds.cms.config.cache;
 
+import com.cloudminds.cms.config.redis.RedisKeyExpirationEvebtListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -39,4 +41,16 @@ public class RedisConfig {
         return template;
     }
 
+    @Bean
+    public RedisMessageListenerContainer redisMessageListenerContainer(RedisConnectionFactory redisConnectionFactory){
+        RedisMessageListenerContainer redisMessageListenerContainer = new RedisMessageListenerContainer();
+        redisMessageListenerContainer.setConnectionFactory(redisConnectionFactory);
+        return redisMessageListenerContainer;
+    }
+
+    @Bean
+    public RedisKeyExpirationEvebtListener redisKeyExpirationEvebtListener(RedisConnectionFactory redisConnectionFactory){
+        RedisKeyExpirationEvebtListener redisKeyExpirationEvebtListener = new RedisKeyExpirationEvebtListener(redisMessageListenerContainer(redisConnectionFactory));
+        return redisKeyExpirationEvebtListener;
+    }
 }

@@ -47,6 +47,7 @@ public class LoginController extends BaseController {
 	@PostMapping("/v1/login")
 	public BaseResp login(@RequestBody LoginUser loginUser) {
 		_log.info("********** login user:{}", loginUser);
+		_log.info("test key :tokenTTL,value :{}",tokenService.getTokenTTL());
 		BaseResp baseResp = new BaseResp();
 		baseResp.setSys(sys);
 		baseResp.setStatus(ConstantBean.RESPONSE_200);

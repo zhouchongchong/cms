@@ -41,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			new AntPathRequestMatcher("/configuration/security"),
 			new AntPathRequestMatcher("/v2/api-docs"),
 			new AntPathRequestMatcher("/cmsUser/v1/login"),
+			new AntPathRequestMatcher("/refresh"),
 			new AntPathRequestMatcher("/user/add_user")
 			);
 

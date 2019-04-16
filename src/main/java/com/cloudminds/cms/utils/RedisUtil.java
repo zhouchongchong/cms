@@ -19,6 +19,8 @@ public class RedisUtil {
 	private final static String NAMESPACE = "cms:";
 
 	@Autowired
+	private  StringRedisTemplate stringRedisTemplate;
+	@Autowired
 	private RedisTemplate<String, String> redisTemplate;
 	@Resource(name = "redisTemplate")
 	private ValueOperations<String, Object> valueOps;
@@ -30,6 +32,18 @@ public class RedisUtil {
 	private ZSetOperations<String, String> zsetOps;
 	@Resource(name = "redisTemplate")
 	private HashOperations<String, String, String> hashOps;
+
+	public StringRedisTemplate getStringRedisTemplate() {
+		return stringRedisTemplate;
+	}
+
+
+
+	public RedisTemplate<String, String> getRedisTemplate() {
+		return redisTemplate;
+	}
+
+
 
 	public void setValue(String key, Object value) {
 		valueOps.set(NAMESPACE + key, value);
